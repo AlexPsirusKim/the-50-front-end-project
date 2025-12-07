@@ -17,17 +17,17 @@
             </div>
         </div>
 
-        <div class="location-not-found">
-            <h1>Sorry, Location not found!!!</h1>
-            <img src="/assets/404.png" alt="404 Error">
+        <div class="location-not-found hidden" role="status" aria-live="polite">
+            <h1>Sorry, we couldn’t find that location.</h1>
+            <img src="assets/404.png" alt="Location not found illustration">
         </div>
 
-        <div class="weather-body">
-            <img src="/assets/cloud.png" alt="Weather Image" class="weather-img">
+        <div class="weather-body hidden">
+            <img src="assets/cloud.png" alt="Weather condition" class="weather-img">
 
-            <div class="weather-box">
+            <div class="weather-box" aria-live="polite">
                 <p class="temperature">0 <sup>°C</sup></p>
-                <p class="description">light rain</p>
+                <p class="description">Light rain</p>
             </div>
 
             <div class="weather-details">
@@ -42,8 +42,8 @@
                 <div class="wind">
                     <i class="fa-solid fa-wind"></i>
                     <div class="text">
-                        <span id="wind-speed">12Km/H</span>
-                        <p>Wind Speed</p>
+                        <span id="wind-speed">12 km/h</span>
+                        <p>Wind speed</p>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
     </div>
 
 
-    <script src="script.js"></script>
+    <script src="script.js" type="module"></script>
     <script src="https://kit.fontawesome.com/595a890311.js" crossorigin="anonymous"></script>
 </body>
 </html>

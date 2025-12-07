@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - 레스토랑</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-wrapper">
+            <div class="login-header">
+                <h1>레스토랑</h1>
+                <p>로그인하여 예약을 진행하세요</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="your@email.com"
+                        required
+                    >
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="비밀번호를 입력하세요"
+                            required
+                        >
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <span class="eye-icon">👁️</span>
+                        </button>
+                    </div>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <div class="form-group checkbox">
+                    <input 
+                        type="checkbox" 
+                        id="remember" 
+                        name="remember"
+                    >
+                    <label for="remember">로그인 상태 유지</label>
+                </div>
+
+                <button type="submit" class="btn-login">로그인</button>
+            </form>
+
+            <div class="login-footer">
+                <a href="#" class="link-forgot-password">비밀번호를 잊으셨나요?</a>
+                <div class="divider"></div>
+                <p class="signup-text">
+                    계정이 없으신가요? 
+                    <a href="#" class="link-signup">회원가입</a>
+                </p>
+            </div>
+
+            <div class="social-login">
+                <p class="social-text">또는 다음으로 로그인</p>
+                <div class="social-buttons">
+                    <button type="button" class="btn-social btn-google">
+                        <span>Google</span>
+                    </button>
+                    <button type="button" class="btn-social btn-facebook">
+                        <span>Facebook</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>
