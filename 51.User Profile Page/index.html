@@ -16,17 +16,56 @@
                 <div class="logo">
                     <h2>UserHub</h2>
                 </div>
-                <nav class="nav-menu">
-                    <a href="#profile" class="nav-link active">Profile</a>
-                    <a href="#about" class="nav-link">About</a>
-                    <a href="#activity" class="nav-link">Activity</a>
-                    <a href="#settings" class="nav-link">Settings</a>
-                </nav>
+                <button class="sidebar-toggle" id="sidebarToggle" aria-controls="sidebar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fas fa-bars"></i>
+                </button>
                 <button class="logout-btn" id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
         </header>
+
+        <aside class="sidebar" id="sidebar" aria-label="Sidebar navigation">
+            <div class="sidebar-header">
+                <div class="sidebar-user">
+                    <img class="sidebar-avatar" src="https://via.placeholder.com/64" alt="Profile avatar">
+                    <div class="sidebar-user-info">
+                        <p class="sidebar-user-name" id="sidebarUserName">John Doe</p>
+                        <p class="sidebar-user-title" id="sidebarUserTitle">Full Stack Developer</p>
+                    </div>
+                </div>
+                <button class="sidebar-close" id="sidebarClose" aria-label="Close navigation">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#profile" class="nav-link nav-link-sidebar active" data-nav-section="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#about" class="nav-link nav-link-sidebar" data-nav-section="about">
+                    <i class="fas fa-address-card"></i>
+                    <span>About</span>
+                </a>
+                <a href="#activity" class="nav-link nav-link-sidebar" data-nav-section="activity">
+                    <i class="fas fa-bolt"></i>
+                    <span>Activity</span>
+                </a>
+                <a href="#settings" class="nav-link nav-link-sidebar" data-nav-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-primary sidebar-cta" id="sidebarPrimaryAction">
+                    <i class="fas fa-plus-circle"></i> New Project
+                </button>
+                <button class="btn btn-secondary sidebar-cta" id="sidebarSecondaryAction">
+                    <i class="fas fa-chart-line"></i> View Analytics
+                </button>
+            </div>
+        </aside>
 
         <main class="main-content">
             <!-- Profile Section -->
