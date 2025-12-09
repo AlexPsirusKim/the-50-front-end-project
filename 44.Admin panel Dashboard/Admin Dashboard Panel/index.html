@@ -24,33 +24,85 @@
             <span class="logo_name">CodingLab</span>
         </div>
 
+        <!-- Profile Snapshot Section -->
+        <div class="profile-section">
+            <div class="profile-snapshot">
+                <img src="images/profile.jpg" alt="User Profile">
+                <div class="profile-info">
+                    <span class="profile-name">Alex Kim</span>
+                    <span class="profile-role">Administrator</span>
+                    <span class="profile-status online">● Online</span>
+                </div>
+            </div>
+        </div>
+
         <div class="menu-items">
-            <ul class="nav-links">
-                <li><a href="#">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Dahsboard</span>
-                </a></li>
-                <li><a href="#">
-                    <i class="uil uil-files-landscapes"></i>
-                    <span class="link-name">Content</span>
-                </a></li>
-                <li><a href="#">
-                    <i class="uil uil-chart"></i>
-                    <span class="link-name">Analytics</span>
-                </a></li>
-                <li><a href="#">
-                    <i class="uil uil-thumbs-up"></i>
-                    <span class="link-name">Like</span>
-                </a></li>
-                <li><a href="#">
-                    <i class="uil uil-comments"></i>
-                    <span class="link-name">Comment</span>
-                </a></li>
-                <li><a href="#">
-                    <i class="uil uil-share"></i>
-                    <span class="link-name">Share</span>
-                </a></li>
-            </ul>
+            <!-- Main Navigation Links -->
+            <div class="nav-section">
+                <span class="section-title">Main Menu</span>
+                <ul class="nav-links">
+                    <li class="active"><a href="#" aria-label="Dashboard">
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">Dashboard</span>
+                    </a></li>
+                    <li><a href="#" aria-label="Content Management">
+                        <i class="uil uil-files-landscapes"></i>
+                        <span class="link-name">Content</span>
+                    </a></li>
+                    <li><a href="#" aria-label="Analytics">
+                        <i class="uil uil-chart"></i>
+                        <span class="link-name">Analytics</span>
+                    </a></li>
+                    <li><a href="#" aria-label="User Management">
+                        <i class="uil uil-users-alt"></i>
+                        <span class="link-name">Users</span>
+                    </a></li>
+                    <li><a href="#" aria-label="Settings">
+                        <i class="uil uil-setting"></i>
+                        <span class="link-name">Settings</span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <!-- Social Section -->
+            <div class="nav-section">
+                <span class="section-title">Social</span>
+                <ul class="nav-links">
+                    <li><a href="#" aria-label="Likes">
+                        <i class="uil uil-thumbs-up"></i>
+                        <span class="link-name">Likes</span>
+                        <span class="notification-badge">12</span>
+                    </a></li>
+                    <li><a href="#" aria-label="Comments">
+                        <i class="uil uil-comments"></i>
+                        <span class="link-name">Comments</span>
+                        <span class="notification-badge">5</span>
+                    </a></li>
+                    <li><a href="#" aria-label="Shares">
+                        <i class="uil uil-share"></i>
+                        <span class="link-name">Shares</span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="nav-section">
+                <span class="section-title">Quick Actions</span>
+                <ul class="quick-actions">
+                    <li><button class="quick-action-btn" aria-label="Add New Post">
+                        <i class="uil uil-plus"></i>
+                        <span class="action-name">New Post</span>
+                    </button></li>
+                    <li><button class="quick-action-btn" aria-label="Upload Files">
+                        <i class="uil uil-upload"></i>
+                        <span class="action-name">Upload</span>
+                    </button></li>
+                    <li><button class="quick-action-btn" aria-label="Send Message">
+                        <i class="uil uil-message"></i>
+                        <span class="action-name">Message</span>
+                    </button></li>
+                </ul>
+            </div>
             
             <ul class="logout-mode">
                 <li><a href="#">
@@ -71,6 +123,9 @@
             </ul>
         </div>
     </nav>
+
+    <!-- Mobile overlay for better UX -->
+    <div class="sidebar-overlay"></div>
 
     <section class="dashboard">
         <div class="top">

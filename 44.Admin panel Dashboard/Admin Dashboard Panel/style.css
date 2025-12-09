@@ -203,6 +203,195 @@ body.dark .switch:before{
     left: 20px;
 }
 
+/* Profile Section Styles */
+.profile-section {
+    margin: 20px 0;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-snapshot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-snapshot img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: var(--tran-05);
+}
+
+.profile-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.profile-role {
+    font-size: 12px;
+    color: var(--black-light-color);
+}
+
+.profile-status {
+    font-size: 11px;
+    color: #22c55e;
+}
+
+.profile-status.away {
+    color: #f59e0b;
+}
+
+.profile-status.busy {
+    color: #ef4444;
+}
+
+nav.close .profile-info {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Navigation Section Styles */
+.nav-section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--black-light-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    padding: 0 14px;
+    transition: var(--tran-05);
+}
+
+nav.close .section-title {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Active navigation item */
+.nav-links li.active a {
+    background-color: var(--primary-color);
+    color: white !important;
+    border-radius: 8px;
+    margin: 0 8px;
+}
+
+.nav-links li.active a i,
+.nav-links li.active a .link-name {
+    color: white !important;
+}
+
+.nav-links li.active a:hover:before {
+    display: none;
+}
+
+/* Notification badges */
+.notification-badge {
+    background-color: #ef4444;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: auto;
+    min-width: 18px;
+    text-align: center;
+    transition: var(--tran-05);
+}
+
+nav.close .notification-badge {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Quick Actions Styles */
+.quick-actions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 45px;
+    padding: 0 14px;
+    background: none;
+    border: none;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    transition: var(--tran-03);
+    border-radius: 8px;
+    margin: 2px 8px;
+}
+
+.quick-action-btn:hover {
+    background-color: var(--border-color);
+}
+
+.quick-action-btn i {
+    font-size: 20px;
+    min-width: 45px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black-light-color);
+}
+
+.quick-action-btn .action-name {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--black-light-color);
+    transition: var(--tran-05);
+}
+
+nav.close .quick-action-btn .action-name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.quick-action-btn:hover i,
+.quick-action-btn:hover .action-name {
+    color: var(--primary-color);
+}
+
+body.dark .quick-action-btn:hover i,
+body.dark .quick-action-btn:hover .action-name {
+    color: var(--text-color);
+}
+
+/* Sidebar Overlay for Mobile */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    transition: var(--tran-03);
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
 .dashboard{
     position: relative;
     left: 250px;
@@ -384,6 +573,21 @@ nav.close ~ .dashboard .top{
         opacity: 1;
         pointer-events: auto;
     }
+    /* Hide profile info and section titles on collapsed mobile */
+    nav .profile-info,
+    nav .section-title,
+    nav .notification-badge,
+    nav .quick-action-btn .action-name {
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close .profile-info,
+    nav.close .section-title,
+    nav.close .notification-badge,
+    nav.close .quick-action-btn .action-name {
+        opacity: 1;
+        pointer-events: auto;
+    }
     nav ~ .dashboard{
         left: 73px;
         width: calc(100% - 73px);
@@ -402,6 +606,10 @@ nav.close ~ .dashboard .top{
     }
     .activity .activity-data{
         overflow-X: scroll;
+    }
+    /* Enhanced mobile overlay support */
+    .sidebar-overlay.active {
+        display: block;
     }
 }
 
