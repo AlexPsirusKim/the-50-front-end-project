@@ -1,0 +1,5 @@
+node_modules/
+.env
+seen-posts.json
+config.json
+digest-log.json

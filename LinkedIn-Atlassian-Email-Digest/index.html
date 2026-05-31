@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atlassian LinkedIn Digest</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f4f9;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ─── Header ─── */
+    header {
+      background: linear-gradient(135deg, #0052cc 0%, #0747a6 100%);
+      color: #fff;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    header img { width: 40px; height: 40px; border-radius: 8px; }
+    header h1 { font-size: 20px; font-weight: 700; }
+    header p  { font-size: 13px; opacity: .8; margin-top: 2px; }
+
+    /* ─── Layout ─── */
+    .container { max-width: 900px; margin: 32px auto; padding: 0 16px; display: grid; gap: 24px; }
+
+    /* ─── Card ─── */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .card h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #0052cc;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e8f0fe;
+    }
+
+    /* ─── Status Bar ─── */
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .stat {
+      background: #f4f7ff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .stat-value { font-size: 24px; font-weight: 700; color: #0052cc; }
+    .stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+
+    /* ─── Toggle ─── */
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; }
+    .toggle-label { font-size: 15px; font-weight: 500; }
+
+    .toggle { position: relative; display: inline-block; width: 48px; height: 26px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; inset: 0;
+      background: #ccc; border-radius: 26px;
+      cursor: pointer; transition: .3s;
+    }
+    .slider::before {
+      content: '';
+      position: absolute; width: 20px; height: 20px;
+      left: 3px; bottom: 3px;
+      background: #fff; border-radius: 50%;
+      transition: .3s;
+    }
+    input:checked + .slider { background: #0052cc; }
+    input:checked + .slider::before { transform: translateX(22px); }
+
+    /* ─── Form ─── */
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 6px; }
+    input[type="text"], input[type="email"], textarea {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid #d1d5db; border-radius: 8px;
+      font-size: 14px; outline: none;
+      transition: border-color .2s;
+    }
+    input:focus, textarea:focus { border-color: #0052cc; }
+    textarea { resize: vertical; min-height: 72px; font-family: monospace; }
+    small { color: #888; font-size: 12px; display: block; margin-top: 4px; }
+
+    /* ─── Buttons ─── */
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    button {
+      padding: 10px 20px; border: none; border-radius: 8px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: opacity .2s, transform .1s;
+    }
+    button:active { transform: scale(.97); }
+    .btn-primary { background: #0052cc; color: #fff; }
+    .btn-primary:hover { opacity: .9; }
+    .btn-secondary { background: #e8f0fe; color: #0052cc; }
+    .btn-secondary:hover { background: #d0e1fd; }
+    .btn-danger { background: #fee2e2; color: #dc2626; }
+    .btn-danger:hover { background: #fecaca; }
+
+    button:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* ─── Badge ─── */
+    .badge {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 12px; font-size: 12px; font-weight: 600;
+    }
+    .badge-green  { background: #d1fae5; color: #065f46; }
+    .badge-red    { background: #fee2e2; color: #991b1b; }
+    .badge-yellow { background: #fef3c7; color: #92400e; }
+    .badge-blue   { background: #dbeafe; color: #1e40af; }
+
+    /* ─── Log Table ─── */
+    .log-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .log-table th, .log-table td {
+      padding: 10px 12px; text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .log-table th { background: #f8fafc; font-weight: 600; color: #555; }
+    .log-table tr:hover td { background: #f8fafc; }
+
+    /* ─── Toast ─── */
+    #toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #1a1a1a; color: #fff;
+      padding: 12px 20px; border-radius: 8px;
+      font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,.3);
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .3s, transform .3s;
+      pointer-events: none; z-index: 9999;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ─── Spinner ─── */
+    .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin .7s linear infinite; vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/apple-touch-icon.png" alt="Atlassian" />
+  <div>
+    <h1>Atlassian LinkedIn Digest</h1>
+    <p>LinkedIn 게시물을 자동으로 모니터링하고 이메일로 전송합니다</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Status -->
+  <div class="card">
+    <h2>현황</h2>
+    <div class="status-grid">
+      <div class="stat">
+        <div class="stat-value" id="stat-status">–</div>
+        <div class="stat-label">서비스 상태</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="stat-recipients">–</div>
+        <div class="stat-label">수신자 수</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="stat-last-posts">–</div>
+        <div class="stat-label">마지막 새 게시물</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="stat-last-run">–</div>
+        <div class="stat-label">마지막 실행</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Control -->
+  <div class="card">
+    <h2>서비스 제어</h2>
+    <div class="toggle-row" style="margin-bottom:20px;">
+      <span class="toggle-label">자동 모니터링 활성화</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-enabled" onchange="toggleService(this.checked)" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="runNow()" id="btn-run">지금 바로 실행</button>
+    </div>
+    <p id="run-result" style="margin-top:12px;font-size:13px;color:#555;"></p>
+  </div>
+
+  <!-- Config -->
+  <div class="card">
+    <h2>설정</h2>
+    <div class="form-group">
+      <label>수신자 이메일 주소</label>
+      <textarea id="recipients" placeholder="user1@example.com&#10;user2@example.com&#10;(한 줄에 하나씩 입력)"></textarea>
+      <small>복수 수신자는 줄바꿈으로 구분합니다.</small>
+    </div>
+    <div class="form-group">
+      <label>실행 주기 (Cron 표현식)</label>
+      <input type="text" id="schedule" placeholder="0 9 * * *" />
+      <small>기본값: <code>0 9 * * *</code> (매일 오전 9시, 한국시간).
+        <a href="https://crontab.guru/" target="_blank" rel="noopener" style="color:#0052cc;">crontab.guru</a>에서 확인하세요.</small>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="saveConfig()">저장</button>
+      <button class="btn-secondary" onclick="loadStatus()">새로고침</button>
+    </div>
+  </div>
+
+  <!-- Log -->
+  <div class="card">
+    <h2>실행 로그</h2>
+    <table class="log-table">
+      <thead>
+        <tr>
+          <th>시각</th>
+          <th>상태</th>
+          <th>새 게시물</th>
+          <th>비고</th>
+        </tr>
+      </thead>
+      <tbody id="log-body">
+        <tr><td colspan="4" style="color:#aaa;text-align:center;padding:24px;">로그 없음</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+  const API = '';
+
+  function toast(msg, duration = 3000) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), duration);
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '–';
+    return new Date(iso).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+  }
+
+  function statusBadge(status) {
+    const map = {
+      sent: ['badge-green', '전송 완료'],
+      no_new_posts: ['badge-blue', '새 글 없음'],
+      skipped_no_recipients: ['badge-yellow', '수신자 없음'],
+      error: ['badge-red', '오류']
+    };
+    const [cls, label] = map[status] || ['badge-yellow', status];
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
+
+  async function loadStatus() {
+    try {
+      const r = await fetch(`${API}/api/status`);
+      const data = await r.json();
+
+      document.getElementById('toggle-enabled').checked = data.enabled;
+      document.getElementById('stat-status').innerHTML =
+        `<span class="badge ${data.enabled ? 'badge-green' : 'badge-red'}">${data.enabled ? '활성' : '비활성'}</span>`;
+      document.getElementById('stat-recipients').textContent = data.recipients.length;
+      document.getElementById('stat-last-posts').textContent = data.lastPostCount ?? '–';
+      document.getElementById('stat-last-run').textContent = data.lastRun ? formatDate(data.lastRun) : '–';
+
+      document.getElementById('recipients').value = data.recipients.join('\n');
+      document.getElementById('schedule').value = data.schedule;
+
+      // Log
+      const tbody = document.getElementById('log-body');
+      if (!data.log || data.log.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="color:#aaa;text-align:center;padding:24px;">로그 없음</td></tr>';
+      } else {
+        tbody.innerHTML = data.log.map(entry => `
+          <tr>
+            <td>${formatDate(entry.timestamp)}</td>
+            <td>${statusBadge(entry.status)}</td>
+            <td>${entry.postCount ?? '–'}</td>
+            <td>${entry.error ? `<span style="color:#dc2626;font-size:12px;">${entry.error}</span>` : entry.recipients ? entry.recipients.join(', ') : ''}</td>
+          </tr>
+        `).join('');
+      }
+    } catch (e) {
+      console.error(e);
+      toast('상태 조회 실패: ' + e.message);
+    }
+  }
+
+  async function toggleService(enabled) {
+    const r = await fetch(`${API}/api/config`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enabled })
+    });
+    const data = await r.json();
+    if (data.success) toast(enabled ? '자동 모니터링이 활성화되었습니다.' : '자동 모니터링이 비활성화되었습니다.');
+    else toast('변경 실패: ' + data.error);
+    loadStatus();
+  }
+
+  async function saveConfig() {
+    const rawRecipients = document.getElementById('recipients').value;
+    const recipients = rawRecipients.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+    const schedule = document.getElementById('schedule').value.trim();
+
+    const r = await fetch(`${API}/api/config`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recipients, schedule })
+    });
+    const data = await r.json();
+    if (data.success) toast('설정이 저장되었습니다.');
+    else toast('저장 실패: ' + data.error);
+    loadStatus();
+  }
+
+  async function runNow() {
+    const btn = document.getElementById('btn-run');
+    const result = document.getElementById('run-result');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>실행 중…';
+    result.textContent = '';
+    try {
+      const r = await fetch(`${API}/api/run-now`, { method: 'POST' });
+      const data = await r.json();
+      if (data.success) {
+        const msg = data.newPostCount > 0
+          ? `새 게시물 ${data.newPostCount}건을 발견하여 이메일을 전송했습니다.`
+          : '새 게시물이 없습니다. (이메일 미발송)';
+        result.textContent = msg;
+        toast(msg);
+      } else {
+        result.textContent = '오류: ' + data.error;
+        toast('실행 오류: ' + data.error);
+      }
+    } catch (e) {
+      result.textContent = '네트워크 오류: ' + e.message;
+      toast('실행 오류: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '지금 바로 실행';
+      loadStatus();
+    }
+  }
+
+  loadStatus();
+  setInterval(loadStatus, 30000);
+</script>
+
+</body>
+</html>
