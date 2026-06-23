@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlassian Team '26 업데이트 요약</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            atlassian: {
+              blue: '#0052CC',
+              lightblue: '#0065FF',
+              navy: '#091E42',
+              teal: '#00B8D9',
+              green: '#36B37E',
+              purple: '#6554C0',
+              red: '#FF5630',
+              orange: '#FF8B00',
+              yellow: '#FFAB00',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .hero-gradient {
+      background: linear-gradient(135deg, #091E42 0%, #0052CC 50%, #0065FF 100%);
+    }
+    .card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 82, 204, 0.18);
+    }
+    .nav-link.active {
+      color: #0052CC;
+      border-bottom-color: #0052CC;
+    }
+    .section-cloud { border-top: 4px solid #0052CC; }
+    .section-teamwork { border-top: 4px solid #36B37E; }
+    .section-guard { border-top: 4px solid #6554C0; }
+    .badge-cloud { background-color: #DEEBFF; color: #0052CC; }
+    .badge-teamwork { background-color: #E3FCEF; color: #006644; }
+    .badge-guard { background-color: #EAE6FF; color: #403294; }
+    .stat-ring {
+      background: conic-gradient(#0052CC var(--pct), #DEEBFF 0);
+    }
+    .source-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: 9999px;
+      background-color: #DEEBFF;
+      color: #0052CC;
+      text-decoration: none;
+      vertical-align: middle;
+      margin-left: 2px;
+      white-space: nowrap;
+    }
+    .source-tag:hover { background-color: #B3D4FF; }
+    @media (max-width: 640px) {
+      .hero-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- ===== HEADER / HERO ===== -->
+  <header class="hero-gradient text-white">
+    <div class="max-w-6xl mx-auto px-4 py-16 sm:py-24 text-center">
+      <p class="inline-block mb-4 bg-white/20 text-white text-sm font-medium px-4 py-1 rounded-full tracking-wide">
+        2026년 5월 5–7일 · 미국 캘리포니아 애너하임
+      </p>
+      <h1 class="hero-title text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
+        Atlassian Team '26<br>업데이트 요약
+      </h1>
+      <p class="text-lg sm:text-xl text-blue-100 max-w-2xl mx-auto mb-8">
+        Cloud Platform · Teamwork Collection · Guard — 3대 핵심 영역의 주요 발표를 한눈에 확인하세요.
+      </p>
+      <!-- Quick stats -->
+      <div class="flex flex-wrap justify-center gap-6 mt-8">
+        <div class="bg-white/15 rounded-2xl px-6 py-4 text-center min-w-[130px]">
+          <div class="text-3xl font-black">1,500억<span class="text-xl">+</span></div>
+          <div class="text-xs text-blue-200 mt-1">Teamwork Graph 연결 수</div>
+        </div>
+        <div class="bg-white/15 rounded-2xl px-6 py-4 text-center min-w-[130px]">
+          <div class="text-3xl font-black">44<span class="text-xl">%</span></div>
+          <div class="text-xs text-blue-200 mt-1">CLI 쉘 에이전트 답변 품질 향상</div>
+        </div>
+        <div class="bg-white/15 rounded-2xl px-6 py-4 text-center min-w-[130px]">
+          <div class="text-3xl font-black">48<span class="text-xl">%</span></div>
+          <div class="text-xs text-blue-200 mt-1">CLI 토큰 사용량 절감</div>
+        </div>
+        <div class="bg-white/15 rounded-2xl px-6 py-4 text-center min-w-[130px]">
+          <div class="text-3xl font-black">25만</div>
+          <div class="text-xs text-blue-200 mt-1">Confluence 독립형 최대 지원 사용자</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== STICKY NAV ===== -->
+  <nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm" id="stickyNav">
+    <div class="max-w-6xl mx-auto px-4">
+      <ul class="flex gap-1 overflow-x-auto whitespace-nowrap py-0 scrollbar-hide">
+        <li>
+          <a href="#cloud-platform"
+             class="inline-block px-4 py-3 text-sm font-semibold text-gray-600 hover:text-atlassian-blue border-b-2 border-transparent hover:border-atlassian-blue transition-colors">
+            ☁️ Cloud Platform
+          </a>
+        </li>
+        <li>
+          <a href="#teamwork-collection"
+             class="inline-block px-4 py-3 text-sm font-semibold text-gray-600 hover:text-green-700 border-b-2 border-transparent hover:border-green-600 transition-colors">
+            📦 Teamwork Collection
+          </a>
+        </li>
+        <li>
+          <a href="#atlassian-guard"
+             class="inline-block px-4 py-3 text-sm font-semibold text-gray-600 hover:text-purple-700 border-b-2 border-transparent hover:border-purple-600 transition-colors">
+            🛡️ Atlassian Guard
+          </a>
+        </li>
+        <li>
+          <a href="#sources"
+             class="inline-block px-4 py-3 text-sm font-semibold text-gray-600 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-400 transition-colors">
+            📚 출처
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-4 py-12 space-y-20">
+
+    <!-- ===== SECTION 1: ATLASSIAN CLOUD PLATFORM ===== -->
+    <section id="cloud-platform" aria-labelledby="cloud-platform-title">
+      <!-- Section header -->
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-3xl">☁️</span>
+        <h2 id="cloud-platform-title" class="text-2xl sm:text-3xl font-extrabold text-gray-900">
+          Atlassian Cloud Platform
+        </h2>
+      </div>
+      <p class="text-gray-500 mb-8 text-sm sm:text-base max-w-3xl">
+        아틀라시안 클라우드 플랫폼은 AI 네이티브 조직이 필요로 하는 컨텍스트 엔진, 개발자 도구, 노코드 자동화, 데이터 시각화, 그리고 보안 격리 기능을 통합 제공합니다.
+      </p>
+
+      <!-- Cards grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1: Teamwork Graph & Rovo -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-cloud p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🔗</span>
+            <span class="badge-cloud text-xs font-bold px-2 py-1 rounded-full">컨텍스트 엔진</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Teamwork Graph &amp; Rovo</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            조직 맞춤형 컨텍스트 엔진으로, <strong class="text-blue-700">1,500억 개 이상</strong>의 객체와 관계를 연결합니다.
+            사람, 프로젝트, 문서, 코드, 의사결정을 Atlassian 및 서드파티 도구 전반에 걸쳐 연결하는 살아있는 공유 컨텍스트 레이어입니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: Teamwork Graph CLI -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-cloud p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🖥️</span>
+            <span class="badge-cloud text-xs font-bold px-2 py-1 rounded-full">오픈 베타</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Teamwork Graph CLI</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            개발자가 터미널에서 <strong class="text-blue-700">300개 이상의 명령어</strong>로 조직 데이터를 직접 쿼리할 수 있습니다.
+            Claude Code, Cursor 등 쉘 에이전트와 연동 시 내부 테스트 기준:
+          </p>
+          <ul class="mt-3 space-y-1 text-sm">
+            <li class="flex items-center gap-2">
+              <span class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></span>
+              답변 품질 <strong class="text-blue-700 ml-1">44% 향상</strong>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></span>
+              토큰 사용량 <strong class="text-blue-700 ml-1">48% 절감</strong>
+            </li>
+          </ul>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+            <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Feature Focus Vol.5
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: Rovo MCP -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-cloud p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🔌</span>
+            <span class="badge-cloud text-xs font-bold px-2 py-1 rounded-full">MCP 지원</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Rovo MCP (Model Context Protocol)</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            Claude, ChatGPT, Copilot, Figma 등 외부 AI 어시스턴트가
+            <strong>권한 검증 및 감사(Audit) 기반</strong>으로 안전하게 Teamwork Graph에 접근할 수 있도록
+            표준 연동을 지원합니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 4: Rovo Studio GA -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-cloud p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🏗️</span>
+            <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full">GA 정식 출시</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Rovo Studio</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            <strong>노코드 기반</strong>으로 프롬프트만 입력해 AI 에이전트, 자동화 워크플로우, 앱을 손쉽게 구축할 수 있습니다.
+            IT 부서의 엄격한 <strong>접근 제어 및 버전 관리</strong>도 지원합니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+            <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-6-May-Post-Team-26/ba-p/3235384"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Feature Focus Vol.6
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 5: Home Dashboards -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-cloud p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">📊</span>
+            <span class="badge-cloud text-xs font-bold px-2 py-1 rounded-full">Analytics 통합</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Home Dashboards 통합</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            Home Dashboards가 <strong>Analytics 앱에 통합</strong>되어 업무 데이터 시각화 및 의사결정을
+            단일 캔버스에서 유연하게 처리할 수 있습니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 6: Units -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-cloud p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🔒</span>
+            <span class="bg-gray-200 text-gray-700 text-xs font-bold px-2 py-1 rounded-full">Closed EAP</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Units</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            조직 내 협업 및 데이터 경계를 설정하여 <strong>AI와 협업 데이터가 지정된 경계 내에 안전하게 격리</strong>되도록
+            통제합니다. 민감한 워크로드를 위한 데이터 주권 기능입니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: TEAMWORK COLLECTION ===== -->
+    <section id="teamwork-collection" aria-labelledby="teamwork-collection-title">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-3xl">📦</span>
+        <h2 id="teamwork-collection-title" class="text-2xl sm:text-3xl font-extrabold text-gray-900">
+          Teamwork Collection
+        </h2>
+      </div>
+      <p class="text-gray-500 mb-8 text-sm sm:text-base max-w-3xl">
+        Jira, Confluence, Loom을 Rovo AI와 함께 번들로 제공하는 팀워크 컬렉션에 AI 기반 협업 및 생산성 향상 기능이 대거 추가되었습니다.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1: Remix with Rovo -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-teamwork p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🎨</span>
+            <span class="badge-teamwork text-xs font-bold px-2 py-1 rounded-full">베타</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Remix with Rovo (Confluence)</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            Confluence 페이지 내의 <strong>텍스트, 표, 리스트를 하이라이트</strong>하여
+            차트, 인포그래픽, 데이터베이스, 슬라이드 형태로 즉시 변환할 수 있습니다.
+            Confluence를 <strong>단순 읽기용 공간에서 실행 및 산출물 추출 공간으로 전환</strong>합니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: Rovo Desktop -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-teamwork p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🖱️</span>
+            <span class="badge-teamwork text-xs font-bold px-2 py-1 rounded-full">오픈 베타</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Rovo Desktop</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            <strong>macOS 및 Windows 전용 네이티브 데스크톱 애플리케이션</strong>을 통해
+            운영체제 워크플로우에 직접 Rovo의 AI 기능을 제공합니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: Rovo Daily Brief -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-teamwork p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">📋</span>
+            <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">EAP</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Rovo Daily Brief</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            주요 업데이트, 핵심 작업, 추천 액션을 <strong>워크스트림별로 매일 아침 요약</strong>해 주는
+            스마트 다이제스트 기능입니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Feature Focus Vol.5
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 4: Automations Use Rovo -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-teamwork p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">⚡</span>
+            <span class="badge-teamwork text-xs font-bold px-2 py-1 rounded-full">신규</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Automations 내 Use Rovo 액션</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            별도의 Rovo 에이전트를 생성하지 않고도 자동화 규칙 안에서
+            <strong>텍스트 요약, 번역, 변환, 데이터 추출</strong>을 즉시 수행할 수 있습니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Feature Focus Vol.5
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 5: Scale -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-teamwork p-6 card-hover flex flex-col sm:col-span-2">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">📈</span>
+            <span class="badge-teamwork text-xs font-bold px-2 py-1 rounded-full">확장성</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-3">Confluence Cloud 확장성(Scale) 향상</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-green-50 rounded-xl p-4 text-center">
+              <div class="text-3xl font-extrabold text-green-700">25만 명</div>
+              <div class="text-xs text-green-600 mt-1 font-medium">독립 실행형 기준 사이트당 최대 지원 사용자</div>
+              <div class="text-xs text-gray-500 mt-1">(Standalone Confluence Cloud)</div>
+            </div>
+            <div class="bg-green-50 rounded-xl p-4 text-center">
+              <div class="text-3xl font-extrabold text-green-700">10만 명</div>
+              <div class="text-xs text-green-600 mt-1 font-medium">Teamwork Collection 포함 시 최대 지원</div>
+              <div class="text-xs text-gray-500 mt-1">(Teamwork Collection 번들)</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+            <a href="https://community.atlassian.com/forums/Customer-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Feature Focus Vol.5
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: ATLASSIAN GUARD ===== -->
+    <section id="atlassian-guard" aria-labelledby="atlassian-guard-title">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-3xl">🛡️</span>
+        <h2 id="atlassian-guard-title" class="text-2xl sm:text-3xl font-extrabold text-gray-900">
+          Atlassian Guard
+        </h2>
+      </div>
+      <p class="text-gray-500 mb-8 text-sm sm:text-base max-w-3xl">
+        아틀라시안 가드는 엔터프라이즈 보안, 데이터 손실 방지(DLP), AI 데이터 거버넌스를 통합 제공하는 클라우드 보안 솔루션입니다.
+      </p>
+
+      <!-- Guard tier overview -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+        <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl border border-purple-200 p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xl">🔐</span>
+            <h3 class="text-lg font-bold text-purple-900">Guard Standard</h3>
+          </div>
+          <p class="text-sm text-purple-800 mb-3">기본 보안 기능을 담당합니다:</p>
+          <ul class="space-y-2 text-sm text-purple-700">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>SSO (Single Sign-On)</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>SCIM (자동화된 사용자 프로비저닝)</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>MFA (다단계 인증)</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>모바일 정책</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>관리자 감사 로그</li>
+          </ul>
+        </div>
+        <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl border border-violet-300 p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xl">🏆</span>
+            <h3 class="text-lg font-bold text-violet-900">Guard Premium</h3>
+          </div>
+          <p class="text-sm text-violet-800 mb-3">Standard 포함 + 고급 기능:</p>
+          <ul class="space-y-2 text-sm text-violet-700">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-violet-500 rounded-full"></span>고급 데이터 보호</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-violet-500 rounded-full"></span>위협 감지</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-violet-500 rounded-full"></span>사고 대응 (Jira, Confluence 등)</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-violet-500 rounded-full"></span>DLP (데이터 손실 방지)</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-violet-500 rounded-full"></span>Rovo Connector 데이터 보안</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Guard detail cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1: Standard & Premium -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-guard p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🔐</span>
+            <span class="badge-guard text-xs font-bold px-2 py-1 rounded-full">체계 확립</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Standard 및 Premium 체계</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            <strong>Guard Standard</strong>는 SSO, SCIM, MFA, 모바일 정책 및 관리자 감사 로그 같은 기본 보안을 담당합니다.
+            <strong>Guard Premium</strong>은 Jira, Confluence 등 지원 제품 전반에 걸친
+            고급 데이터 보호, 위협 감지 및 사고 대응 기능을 추가 제공합니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: DLP EAP -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-guard p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🔍</span>
+            <span class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded-full">DLP EAP</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">데이터 가시성 및 대규모 분류</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            Guard Premium에서 제공하는 DLP(Data Loss Prevention) 기능:
+          </p>
+          <ul class="mt-2 space-y-1 text-sm text-gray-600">
+            <li class="flex items-start gap-2">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+              전체 사이트 스캔
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+              향상된 기본 감지 규칙
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+              자동 데이터 분류 및 재분류 제어
+            </li>
+          </ul>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Feature Focus Vol.5
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: Rovo Connector Data Security -->
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-100 section-guard p-6 card-hover flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-2xl">🤖</span>
+            <span class="badge-guard text-xs font-bold px-2 py-1 rounded-full">AI 데이터 보안</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Rovo Connector 데이터 보안</h3>
+          <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+            AI가 풀링하고 처리하는 <strong>서드파티 데이터에 대한 규칙</strong>을 설정할 수 있습니다.
+            은행 계좌번호와 같은 <strong>기밀 데이터가 나타날 경우 자동으로 차단</strong>할 수 있는
+            강력한 정책 집행 기능을 제공합니다.
+          </p>
+          <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+            출처:
+            <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Atlassian Community
+            </a>
+            <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
+               target="_blank" rel="noopener noreferrer" class="source-tag">
+              🔗 Feature Focus Vol.5
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== SOURCES SECTION ===== -->
+  <section id="sources" class="bg-gray-100 border-t border-gray-200 mt-16">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+        <span>📚</span> 출처 및 참고 자료
+      </h2>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="text-blue-500 mt-0.5">🔗</span>
+          <a href="https://community.atlassian.com/forums/Enterprise-articles/Team-26-US-Start-your-AI-and-cloud-journey-with-the-Atlassian/ba-p/3236948"
+             target="_blank" rel="noopener noreferrer"
+             class="text-sm text-blue-700 hover:underline break-all">
+            Atlassian Community — Team '26 US: Start your AI and cloud journey with the Atlassian Platform
+          </a>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-blue-500 mt-0.5">🔗</span>
+          <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
+             target="_blank" rel="noopener noreferrer"
+             class="text-sm text-blue-700 hover:underline break-all">
+            Atlassian Community — Feature Focus 2026 Vol. 5 (May): Pre-Team '26
+          </a>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-blue-500 mt-0.5">🔗</span>
+          <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-6-May-Post-Team-26/ba-p/3235384"
+             target="_blank" rel="noopener noreferrer"
+             class="text-sm text-blue-700 hover:underline break-all">
+            Atlassian Community — Feature Focus 2026 Vol. 6 (May): Post-Team '26
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-gray-900 text-gray-400 py-8">
+    <div class="max-w-6xl mx-auto px-4 text-center text-sm">
+      <p class="mb-1">이 페이지는 Atlassian Community의 공개 발표 자료를 기반으로 작성되었습니다.</p>
+      <p class="text-gray-500 text-xs">마지막 업데이트: 2026년 6월 · RBL-12</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll active nav link highlighting
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('#stickyNav a');
+
+    function onScroll() {
+      let current = '';
+      sections.forEach(function(section) {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop <= 80) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(function(link) {
+        link.classList.remove('text-blue-700', 'border-blue-600', 'text-green-700', 'border-green-600', 'text-purple-700', 'border-purple-600');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('font-bold');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  </script>
+</body>
+</html>
