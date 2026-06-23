@@ -419,7 +419,7 @@
                target="_blank" rel="noopener noreferrer" class="source-tag">
               🔗 Atlassian Community
             </a>
-            <a href="https://community.atlassian.com/forums/Customer-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
+            <a href="https://community.atlassian.com/forums/Customer-Success/Feature-Focus-2026-Vol-5-May-Pre-Team-26/ba-p/3232060"
                target="_blank" rel="noopener noreferrer" class="source-tag">
               🔗 Feature Focus Vol.5
             </a>
@@ -604,27 +604,71 @@
   </footer>
 
   <script>
-    // Smooth scroll active nav link highlighting
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('#stickyNav a');
+    (function() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('#stickyNav a');
 
-    function onScroll() {
-      let current = '';
-      sections.forEach(function(section) {
-        const sectionTop = section.getBoundingClientRect().top;
-        if (sectionTop <= 80) {
-          current = section.getAttribute('id');
+      // Color mapping for each section
+      const colorMap = {
+        'cloud-platform': { text: 'text-blue-700', border: 'border-blue-600' },
+        'teamwork-collection': { text: 'text-green-700', border: 'border-green-600' },
+        'atlassian-guard': { text: 'text-purple-700', border: 'border-purple-600' },
+        'sources': { text: 'text-gray-900', border: 'border-gray-500' }
+      };
+
+      function clearActiveClasses(link) {
+        Object.values(colorMap).forEach(function(c) {
+          link.classList.remove(c.text, c.border);
+        });
+        link.classList.remove('font-bold');
+        link.classList.add('text-gray-600', 'border-transparent');
+      }
+
+      function setActiveClass(link, sectionId) {
+        var colors = colorMap[sectionId];
+        if (colors) {
+          link.classList.remove('text-gray-600', 'border-transparent');
+          link.classList.add(colors.text, colors.border, 'font-bold');
         }
-      });
+      }
+
+      function onScroll() {
+        var current = '';
+        sections.forEach(function(section) {
+          var sectionTop = section.getBoundingClientRect().top;
+          if (sectionTop <= 120) {
+            current = section.getAttribute('id');
+          }
+        });
+        navLinks.forEach(function(link) {
+          clearActiveClasses(link);
+          var href = link.getAttribute('href');
+          if (href === '#' + current) {
+            setActiveClass(link, current);
+          }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Smooth scroll for nav links
       navLinks.forEach(function(link) {
-        link.classList.remove('text-blue-700', 'border-blue-600', 'text-green-700', 'border-green-600', 'text-purple-700', 'border-purple-600');
-        if (link.getAttribute('href') === '#' + current) {
-          link.classList.add('font-bold');
-        }
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          var targetId = link.getAttribute('href');
+          var target = document.querySelector(targetId);
+          if (target) {
+            var nav = document.getElementById('stickyNav');
+            var navHeight = nav ? nav.offsetHeight : 0;
+            var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+          }
+        });
       });
-    }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+      // Initial call
+      onScroll();
+    })();
   </script>
 </body>
 </html>
