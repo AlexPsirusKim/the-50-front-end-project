@@ -16,17 +16,223 @@ body{
 .container{
   display: flex;
   width: 100%;
-  gap: 10px;
-  padding: 10px;
-  max-width: 1050px;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  position: relative;
+}
+
+@media (max-width: 980px){
+  body{
+    padding: 24px 16px;
+  }
+  .container{
+    flex-direction: column;
+    gap: 24px;
+  }
+  .tools-board{
+    width: 100%;
+  }
+  .drawing-board{
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px){
+  body{
+    padding: 16px;
+  }
+  .container{
+    padding: 12px;
+  }
+  .tools-board{
+    padding: 20px;
+  }
+  .signup-form{
+    padding: 16px;
+  }
+  .drawing-board{
+    padding: 16px;
+  }
+  .canvas-header h2{
+    font-size: 1.3rem;
+  }
+  .canvas-header p{
+    font-size: 0.85rem;
+  }
+  .community-card{
+    padding: 20px;
+  }
 }
 section{
   background: #fff;
-  border-radius: 7px;
+  border-radius: 12px;
 }
 .tools-board{
-  width: 210px;
-  padding: 15px 22px 0;
+  width: 320px;
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+  box-shadow: 0 20px 45px rgba(40, 81, 145, 0.15);
+}
+.brand-header{
+  text-align: center;
+}
+.brand-title{
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1b2a4b;
+}
+.brand-subtitle{
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #60729b;
+}
+.signup-form{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #d9e1f2;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.signup-form .form-title{
+  font-size: 1.25rem;
+  color: #1b2a4b;
+  font-weight: 600;
+}
+.form-description{
+  font-size: 0.95rem;
+  color: #4a5977;
+}
+.form-feedback{
+  min-height: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.form-feedback.success{
+  background: rgba(27, 127, 75, 0.12);
+  color: #1b7f4b;
+}
+.form-feedback.error{
+  background: rgba(209, 72, 54, 0.12);
+  color: #d14836;
+}
+.form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-group label, .preferences legend{
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1b2a4b;
+}
+.form-group input,
+.form-group select{
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #c0c9dd;
+  font-size: 0.95rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  background: #fff;
+}
+.form-group input.has-error,
+.form-group select.has-error{
+  border-color: #d14836;
+  box-shadow: 0 0 0 3px rgba(209, 72, 54, 0.15);
+}
+.form-group input:focus,
+.form-group select:focus{
+  border-color: #4A98F7;
+  box-shadow: 0 0 0 4px rgba(74, 152, 247, 0.15);
+  outline: none;
+}
+.input-with-hint{
+  position: relative;
+  display: flex;
+}
+.input-with-hint input{
+  flex: 1;
+}
+.toggle-password{
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #4A98F7;
+  cursor: pointer;
+}
+.field-hint{
+  font-size: 0.8rem;
+  color: #6c7a93;
+  margin-top: -4px;
+}
+.error-message{
+  min-height: 18px;
+  font-size: 0.8rem;
+  color: #d43f3a;
+}
+.preferences{
+  border: 1px solid #d9e1f2;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(237, 243, 252, 0.5);
+}
+.preferences .checkbox{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.85rem;
+  color: #425172;
+  line-height: 1.4;
+}
+.preferences .checkbox input{
+  margin-top: 4px;
+}
+.preferences .checkbox input.has-error{
+  box-shadow: 0 0 0 3px rgba(209, 72, 54, 0.15);
+}
+.link{
+  color: #4A98F7;
+  text-decoration: none;
+  font-weight: 500;
+}
+.link:hover,
+.link:focus{
+  text-decoration: underline;
+}
+.primary-btn{
+  padding: 12px 14px;
+  background: linear-gradient(135deg, #4A98F7 0%, #3269d2 100%);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(74, 152, 247, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.primary-btn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(74, 152, 247, 0.35);
+}
+.form-footer{
+  font-size: 0.9rem;
+  text-align: center;
+  color: #4a5977;
 }
 .tools-board .row{
   margin-bottom: 20px;
@@ -138,7 +344,74 @@ section{
 }
 .drawing-board{
   flex: 1;
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.9fr);
+  gap: 18px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #dce3f5;
+  box-shadow: 0 15px 35px rgba(49, 87, 145, 0.12);
+}
+.canvas-panel{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.canvas-header h2{
+  font-size: 1.5rem;
+  color: #1b2a4b;
+  font-weight: 600;
+}
+.canvas-header p{
+  color: #5a6c92;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+.drawing-board canvas{
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  border: 1px dashed #c2cde4;
+  background: repeating-linear-gradient(45deg, rgba(74, 152, 247, 0.04), rgba(74, 152, 247, 0.04) 20px, rgba(255, 255, 255, 0.2) 20px, rgba(255, 255, 255, 0.2) 40px), #fff;
+}
+.community-card{
+  background: linear-gradient(145deg, rgba(50, 105, 210, 0.12), rgba(74, 152, 247, 0.05));
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #1b2a4b;
+}
+.community-card h3{
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.community-card ul{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #425172;
+}
+.community-card ul li{
+  position: relative;
+  padding-left: 26px;
+}
+.community-card ul li::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4A98F7, #3269d2);
+}
+.privacy-note{
+  font-size: 0.8rem;
+  color: #60729b;
 }
 .drawing-board canvas{
   width: 100%;

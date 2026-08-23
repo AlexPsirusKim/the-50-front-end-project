@@ -6,6 +6,9 @@ colorBtns = document.querySelectorAll(".colors .option"),
 colorPicker = document.querySelector("#color-picker"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
+signupForm = document.querySelector("#signup-form"),
+formFeedback = document.querySelector(".form-feedback"),
+togglePasswordBtn = signupForm?.querySelector(".toggle-password"),
 ctx = canvas.getContext("2d");
 
 // global variables with default value
@@ -14,6 +17,43 @@ isDrawing = false,
 selectedTool = "brush",
 brushWidth = 5,
 selectedColor = "#000";
+
+const formFields = {
+    fullName: signupForm?.querySelector("#full-name"),
+    email: signupForm?.querySelector("#email"),
+    password: signupForm?.querySelector("#password"),
+    confirmPassword: signupForm?.querySelector("#confirm-password"),
+    role: signupForm?.querySelector("#role"),
+    newsletter: signupForm?.querySelector("#newsletter"),
+    terms: signupForm?.querySelector("#terms")
+};
+
+const validators = {
+    fullName: (value) => value.trim().length >= 2,
+    email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
+    password: (value) => /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(value),
+    confirmPassword: (value, fields) => value === fields.password.value,
+    role: (value) => Boolean(value),
+    terms: (_, fields) => fields.terms.checked
+};
+
+const focusableFieldOrder = [
+    "fullName",
+    "email",
+    "password",
+    "confirmPassword",
+    "role",
+    "terms"
+];
+
+const errorMessages = {
+    fullName: "Please enter your full name.",
+    email: "Enter a valid email address.",
+    password: "Use at least 8 characters including a number.",
+    confirmPassword: "Passwords do not match.",
+    role: "Tell us how you'll use SketchPad.",
+    terms: "You must accept the terms to continue."
+};
 
 const setCanvasBackground = () => {
     // setting whole canvas background to white, so the downloaded img background will be white
@@ -112,6 +152,120 @@ colorPicker.addEventListener("change", () => {
     colorPicker.parentElement.style.background = colorPicker.value;
     colorPicker.parentElement.click();
 });
+
+const showFieldError = (field, message) => {
+    const errorEl = signupForm?.querySelector(`[data-error-for="${field.id}"]`);
+    if (!errorEl) return;
+    errorEl.textContent = message || "";
+    field.classList.toggle("has-error", Boolean(message));
+};
+
+const validateField = (fieldName) => {
+    if (!signupForm) return true;
+    const field = formFields[fieldName];
+    const validator = validators[fieldName];
+    if (!field || !validator) return true;
+
+    const value = field.type === "checkbox" ? field.checked : field.value;
+    const isValid = validator(value, formFields);
+
+    if (!isValid) {
+        showFieldError(field, errorMessages[fieldName]);
+        return false;
+    }
+
+    showFieldError(field, "");
+    return true;
+};
+
+const validateForm = () => {
+    if (!signupForm) return false;
+    let isFormValid = true;
+    let firstInvalidField = null;
+
+    focusableFieldOrder.forEach((fieldName) => {
+        const isValid = validateField(fieldName);
+        if (!isValid) {
+            isFormValid = false;
+            if (!firstInvalidField) {
+                firstInvalidField = formFields[fieldName];
+            }
+        }
+    });
+
+    if (!isFormValid && firstInvalidField) {
+        firstInvalidField.focus();
+    }
+
+    return isFormValid;
+};
+
+const resetFormState = () => {
+    if (!signupForm) return;
+    Object.values(formFields).forEach((field) => {
+        if (!field) return;
+        field.classList.remove("has-error");
+    });
+    signupForm.querySelectorAll(".error-message").forEach((message) => {
+        message.textContent = "";
+    });
+    if (formFeedback) {
+        formFeedback.textContent = "";
+        formFeedback.classList.remove("success", "error");
+    }
+};
+
+if (signupForm) {
+    signupForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!validateForm()) {
+            if (formFeedback) {
+                formFeedback.textContent = "Please review the highlighted fields.";
+                formFeedback.classList.remove("success");
+                formFeedback.classList.add("error");
+            }
+            return;
+        }
+
+        const formData = {
+            fullName: formFields.fullName.value.trim(),
+            email: formFields.email.value.trim().toLowerCase(),
+            role: formFields.role.value,
+            newsletter: formFields.newsletter.checked
+        };
+
+        if (formFeedback) {
+            formFeedback.textContent = `Welcome to SketchPad, ${formData.fullName}! Check your inbox for a confirmation email.`;
+            formFeedback.classList.remove("error");
+            formFeedback.classList.add("success");
+        }
+
+        signupForm.reset();
+        formFields.role.value = "";
+        formFields.newsletter.checked = true;
+    });
+
+    Object.entries(formFields).forEach(([name, field]) => {
+        if (!field || name === "newsletter") return;
+        const handler = () => validateField(name);
+        field.addEventListener("blur", handler);
+        field.addEventListener("input", () => {
+            if (field.classList.contains("has-error")) {
+                handler();
+            }
+        });
+    });
+
+    togglePasswordBtn?.addEventListener("click", () => {
+        const passwordField = formFields.password;
+        if (!passwordField) return;
+        const isHidden = passwordField.type === "password";
+        passwordField.type = isHidden ? "text" : "password";
+        togglePasswordBtn.textContent = isHidden ? "Hide" : "Show";
+        togglePasswordBtn.setAttribute("aria-expanded", String(isHidden));
+        passwordField.focus();
+    });
+}
 
 clearCanvas.addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing whole canvas
