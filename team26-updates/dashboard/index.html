@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitalSync — 론칭 성과 측정 대시보드</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="14" stroke="#4F46E5" stroke-width="2.5"/>
+                    <path d="M8 18 L13 13 L17 16 L24 9" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="24" cy="9" r="2" fill="#4F46E5"/>
+                </svg>
+            </div>
+            <span class="logo-text">VitalSync</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item active" data-page="overview">
+                <i class="uil uil-tachometer-fast-alt"></i>
+                <span>대시보드 개요</span>
+            </li>
+            <li class="nav-item" data-page="acquisition">
+                <i class="uil uil-download-alt"></i>
+                <span>사용자 획득</span>
+            </li>
+            <li class="nav-item" data-page="retention">
+                <i class="uil uil-users-alt"></i>
+                <span>리텐션 분석</span>
+            </li>
+            <li class="nav-item" data-page="revenue">
+                <i class="uil uil-dollar-sign"></i>
+                <span>수익화</span>
+            </li>
+            <li class="nav-item" data-page="channels">
+                <i class="uil uil-chart-pie"></i>
+                <span>채널별 성과</span>
+            </li>
+        </ul>
+
+        <div class="nav-footer">
+            <div class="data-status">
+                <span class="status-dot live"></span>
+                <span class="status-text">실시간 데이터 연동 중</span>
+            </div>
+            <div class="last-updated" id="lastUpdated">
+                마지막 업데이트: --
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="uil uil-bars"></i>
+                </button>
+                <h1 class="page-title" id="pageTitle">론칭 성과 대시보드</h1>
+            </div>
+            <div class="top-right">
+                <div class="date-filter">
+                    <select id="dateRange">
+                        <option value="7d">최근 7일</option>
+                        <option value="30d" selected>최근 30일</option>
+                        <option value="90d">최근 90일</option>
+                        <option value="6m">6개월</option>
+                        <option value="1y">1년</option>
+                    </select>
+                </div>
+                <div class="phase-badge" id="phaseBadge">
+                    <span class="phase-dot"></span>
+                    Phase 1: 소프트 론칭
+                </div>
+                <button class="btn-refresh" id="btnRefresh" title="데이터 새로고침">
+                    <i class="uil uil-sync"></i>
+                </button>
+                <button class="btn-theme" id="btnTheme" title="테마 전환">
+                    <i class="uil uil-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- ===== PAGE: Overview ===== -->
+        <div class="page-content active" id="page-overview">
+            <!-- KPI Summary Cards -->
+            <section class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">총 다운로드</span>
+                        <span class="kpi-icon downloads"><i class="uil uil-download-alt"></i></span>
+                    </div>
+                    <div class="kpi-value" id="kpiDownloads">--</div>
+                    <div class="kpi-footer">
+                        <span class="kpi-change positive" id="kpiDownloadsChange">--</span>
+                        <span class="kpi-target">목표: 5,000,000</span>
+                    </div>
+                    <div class="kpi-progress">
+                        <div class="progress-bar" id="progressDownloads" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">D7 리텐션</span>
+                        <span class="kpi-icon retention"><i class="uil uil-users-alt"></i></span>
+                    </div>
+                    <div class="kpi-value" id="kpiRetention">--</div>
+                    <div class="kpi-footer">
+                        <span class="kpi-change positive" id="kpiRetentionChange">--</span>
+                        <span class="kpi-target">목표: 40%</span>
+                    </div>
+                    <div class="kpi-progress">
+                        <div class="progress-bar" id="progressRetention" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">유료 전환율</span>
+                        <span class="kpi-icon conversion"><i class="uil uil-dollar-sign"></i></span>
+                    </div>
+                    <div class="kpi-value" id="kpiConversion">--</div>
+                    <div class="kpi-footer">
+                        <span class="kpi-change positive" id="kpiConversionChange">--</span>
+                        <span class="kpi-target">목표: 8%</span>
+                    </div>
+                    <div class="kpi-progress">
+                        <div class="progress-bar" id="progressConversion" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">NPS</span>
+                        <span class="kpi-icon nps"><i class="uil uil-smile"></i></span>
+                    </div>
+                    <div class="kpi-value" id="kpiNPS">--</div>
+                    <div class="kpi-footer">
+                        <span class="kpi-change positive" id="kpiNPSChange">--</span>
+                        <span class="kpi-target">목표: 45</span>
+                    </div>
+                    <div class="kpi-progress">
+                        <div class="progress-bar" id="progressNPS" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">평균 CAC</span>
+                        <span class="kpi-icon cac"><i class="uil uil-chart-pie"></i></span>
+                    </div>
+                    <div class="kpi-value" id="kpiCAC">--</div>
+                    <div class="kpi-footer">
+                        <span class="kpi-change negative" id="kpiCACChange">--</span>
+                        <span class="kpi-target">목표: ≤ $1.50</span>
+                    </div>
+                    <div class="kpi-progress">
+                        <div class="progress-bar" id="progressCAC" style="width: 0%"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Row 1 -->
+            <section class="charts-row">
+                <div class="chart-card wide">
+                    <div class="chart-header">
+                        <h3>일별 다운로드 추이</h3>
+                        <div class="chart-legend" id="legendDownloads"></div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartDownloads"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>플랜별 구독 분포</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartPlans"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Row 2 -->
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>코호트별 리텐션 커브</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartRetention"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>채널별 CAC 비교</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartCAC"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Funnel & NPS Row -->
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>전환 퍼널</h3>
+                    </div>
+                    <div class="chart-body funnel-body">
+                        <div class="funnel" id="funnelChart"></div>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>NPS 추이 및 분포</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartNPS"></canvas>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===== PAGE: Acquisition ===== -->
+        <div class="page-content" id="page-acquisition">
+            <section class="kpi-cards compact">
+                <div class="kpi-card mini">
+                    <span class="kpi-label">일일 다운로드</span>
+                    <span class="kpi-value" id="kpiDailyDownloads">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">유기적 비율</span>
+                    <span class="kpi-value" id="kpiOrganicRate">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">CPI (평균)</span>
+                    <span class="kpi-value" id="kpiCPI">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">앱스토어 순위</span>
+                    <span class="kpi-value" id="kpiAppRank">--</span>
+                </div>
+            </section>
+            <section class="charts-row">
+                <div class="chart-card wide">
+                    <div class="chart-header"><h3>채널별 일일 다운로드 추이</h3></div>
+                    <div class="chart-body"><canvas id="chartChannelDownloads"></canvas></div>
+                </div>
+            </section>
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header"><h3>국가별 다운로드 분포</h3></div>
+                    <div class="chart-body"><canvas id="chartGeoDownloads"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header"><h3>채널별 CPI 추이</h3></div>
+                    <div class="chart-body"><canvas id="chartCPITrend"></canvas></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===== PAGE: Retention ===== -->
+        <div class="page-content" id="page-retention">
+            <section class="kpi-cards compact">
+                <div class="kpi-card mini">
+                    <span class="kpi-label">D1 리텐션</span>
+                    <span class="kpi-value" id="kpiD1">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">D7 리텐션</span>
+                    <span class="kpi-value" id="kpiD7">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">D30 리텐션</span>
+                    <span class="kpi-value" id="kpiD30">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">주간 활성 사용자</span>
+                    <span class="kpi-value" id="kpiWAU">--</span>
+                </div>
+            </section>
+            <section class="charts-row">
+                <div class="chart-card wide">
+                    <div class="chart-header"><h3>주차별 코호트 리텐션 히트맵</h3></div>
+                    <div class="chart-body"><canvas id="chartCohortHeatmap"></canvas></div>
+                </div>
+            </section>
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header"><h3>세그먼트별 D7 리텐션</h3></div>
+                    <div class="chart-body"><canvas id="chartSegmentRetention"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header"><h3>DAU / MAU 비율 추이</h3></div>
+                    <div class="chart-body"><canvas id="chartDAUMAU"></canvas></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===== PAGE: Revenue ===== -->
+        <div class="page-content" id="page-revenue">
+            <section class="kpi-cards compact">
+                <div class="kpi-card mini">
+                    <span class="kpi-label">MRR</span>
+                    <span class="kpi-value" id="kpiMRR">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">ARPU</span>
+                    <span class="kpi-value" id="kpiARPU">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">전환율</span>
+                    <span class="kpi-value" id="kpiConvRate">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">LTV/CAC 비율</span>
+                    <span class="kpi-value" id="kpiLTVCAC">--</span>
+                </div>
+            </section>
+            <section class="charts-row">
+                <div class="chart-card wide">
+                    <div class="chart-header"><h3>MRR 추이</h3></div>
+                    <div class="chart-body"><canvas id="chartMRR"></canvas></div>
+                </div>
+            </section>
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header"><h3>플랜별 전환 퍼널</h3></div>
+                    <div class="chart-body"><canvas id="chartPlanFunnel"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header"><h3>LTV 분포</h3></div>
+                    <div class="chart-body"><canvas id="chartLTV"></canvas></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===== PAGE: Channels ===== -->
+        <div class="page-content" id="page-channels">
+            <section class="kpi-cards compact">
+                <div class="kpi-card mini">
+                    <span class="kpi-label">총 마케팅 지출</span>
+                    <span class="kpi-value" id="kpiTotalSpend">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">ROAS</span>
+                    <span class="kpi-value" id="kpiROAS">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">최적 채널</span>
+                    <span class="kpi-value" id="kpiBestChannel">--</span>
+                </div>
+                <div class="kpi-card mini">
+                    <span class="kpi-label">파트너 유입 비중</span>
+                    <span class="kpi-value" id="kpiPartnerShare">--</span>
+                </div>
+            </section>
+
+            <!-- Channel Performance Table -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="chart-header"><h3>채널별 성과 상세</h3></div>
+                    <div class="table-wrapper">
+                        <table id="channelTable">
+                            <thead>
+                                <tr>
+                                    <th>채널</th>
+                                    <th>지출</th>
+                                    <th>다운로드</th>
+                                    <th>CAC</th>
+                                    <th>전환율</th>
+                                    <th>ROAS</th>
+                                    <th>상태</th>
+                                </tr>
+                            </thead>
+                            <tbody id="channelTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header"><h3>채널별 예산 배분</h3></div>
+                    <div class="chart-body"><canvas id="chartBudgetAlloc"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header"><h3>채널별 CAC vs 전환율</h3></div>
+                    <div class="chart-body"><canvas id="chartCACvsConv"></canvas></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
